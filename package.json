@@ -4,10 +4,9 @@
   "description": "F and h backend",
   "main": "index.js",
   "scripts": {
-    "start": "node api/index.js",
-    "dev": "nodemon api/index.js"
+    "start": "node api/index.js"
   },
-  "author": "",
+  "author": "Syed Husbn Ali",
   "license": "ISC",
   "dependencies": {
     "backend": "file:",
@@ -17,7 +16,6 @@
     "express": "^4.21.1",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.9.0",
-    "mongoose": "^8.7.1",
-    "nodemon": "^3.1.7"
+    "mongoose": "^8.7.1"
   }
 }
