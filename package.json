@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "F and h backend",
+  "description": "F and H backend",
   "main": "index.js",
   "scripts": {
     "start": "node api/index.js"
