@@ -1,12 +1,10 @@
 import Order from "../Models/ordermodel.js";
 
-// Helper function to generate tracking number
 const generateTrackingNumber = () => {
   const randomDigits = Math.floor(1000 + Math.random() * 9000);
   return `FH${randomDigits}`;
 };
 
-// Create order
 export const createOrder = async (req, res) => {
   const {
     shipperName,
@@ -63,7 +61,6 @@ export const createOrder = async (req, res) => {
   }
 };
 
-// Get orders for a specific user
 export const getOrders = async (req, res) => {
   try {
     const orders = await Order.find({ userId: req.user._id });
@@ -73,7 +70,6 @@ export const getOrders = async (req, res) => {
   }
 };
 
-// Get a single order by its ID
 export const getOrderById = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
@@ -86,7 +82,6 @@ export const getOrderById = async (req, res) => {
   }
 };
 
-// Get all orders (admin only)
 export const getAllOrders = async (req, res) => {
   if (req.user.username !== "admin") {
     return res.status(403).json({ message: "Access denied, not admin" });
@@ -100,7 +95,6 @@ export const getAllOrders = async (req, res) => {
   }
 };
 
-// Update order status
 export const updateOrderStatus = async (req, res) => {
   const { trackingNumber, status } = req.body;
 
@@ -120,7 +114,6 @@ export const updateOrderStatus = async (req, res) => {
   }
 };
 
-// Track an order by its tracking number
 export const trackOrder = async (req, res) => {
   const { trackingNumber } = req.params;
 
