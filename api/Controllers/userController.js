@@ -1,14 +1,19 @@
-const User = require("../Models/usermodels");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
+import User from "../Models/usermodels.js";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
+// Load environment variables from the .env file
+dotenv.config();
+
+// Function to generate JWT token
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
 };
 
-exports.registerUser = async (req, res) => {
+// Register a new user
+export const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
@@ -29,10 +34,12 @@ exports.registerUser = async (req, res) => {
   }
 };
 
-exports.loginUser = async (req, res) => {
+// Login a user
+export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    // Admin login check
     if (
       email === process.env.ADMIN_EMAIL &&
       password === process.env.PASSWORD
@@ -44,6 +51,7 @@ exports.loginUser = async (req, res) => {
       });
     }
 
+    // Regular user login
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: "Invalid email or password" });

@@ -1,10 +1,13 @@
-const Order = require("../Models/ordermodel");
+import Order from "../Models/ordermodel.js";
 
+// Helper function to generate tracking number
 const generateTrackingNumber = () => {
   const randomDigits = Math.floor(1000 + Math.random() * 9000);
   return `FH${randomDigits}`;
 };
-exports.createOrder = async (req, res) => {
+
+// Create order
+export const createOrder = async (req, res) => {
   const {
     shipperName,
     shipperAddress,
@@ -60,7 +63,8 @@ exports.createOrder = async (req, res) => {
   }
 };
 
-exports.getOrders = async (req, res) => {
+// Get orders for a specific user
+export const getOrders = async (req, res) => {
   try {
     const orders = await Order.find({ userId: req.user._id });
     res.json(orders);
@@ -69,7 +73,8 @@ exports.getOrders = async (req, res) => {
   }
 };
 
-exports.getOrderById = async (req, res) => {
+// Get a single order by its ID
+export const getOrderById = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id);
     if (!order) {
@@ -81,7 +86,8 @@ exports.getOrderById = async (req, res) => {
   }
 };
 
-exports.getAllOrders = async (req, res) => {
+// Get all orders (admin only)
+export const getAllOrders = async (req, res) => {
   if (req.user.username !== "admin") {
     return res.status(403).json({ message: "Access denied, not admin" });
   }
@@ -94,7 +100,8 @@ exports.getAllOrders = async (req, res) => {
   }
 };
 
-exports.updateOrderStatus = async (req, res) => {
+// Update order status
+export const updateOrderStatus = async (req, res) => {
   const { trackingNumber, status } = req.body;
 
   try {
@@ -113,7 +120,8 @@ exports.updateOrderStatus = async (req, res) => {
   }
 };
 
-exports.trackOrder = async (req, res) => {
+// Track an order by its tracking number
+export const trackOrder = async (req, res) => {
   const { trackingNumber } = req.params;
 
   try {

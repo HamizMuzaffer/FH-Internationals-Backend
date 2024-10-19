@@ -1,14 +1,14 @@
-const express = require("express");
-const { registerUser, loginUser } = require("../Controllers/userController");
-const {
+import express from "express";
+import { registerUser, loginUser } from "../Controllers/userController.js";
+import {
   createOrder,
   getOrders,
   getOrderById,
   getAllOrders,
   updateOrderStatus,
   trackOrder,
-} = require("../Controllers/orderController");
-const { protect } = require("../Middlewears/authMiddlewear");
+} from "../Controllers/orderController.js";
+import { protect } from "../Middlewears/authMiddlewear.js";
 
 const router = express.Router();
 
@@ -25,4 +25,4 @@ router.get("/profile", protect, (req, res) => {
   res.json(req.user);
 });
 
-module.exports = router;
+export default router;
