@@ -16,6 +16,23 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  CNIC: {
+    type: Number,
+    required: true,
+  },
+  contact: {
+    type: String,
+    required: true,
+  },
+  city: {
+    type: String,
+    required: true,
+  },
+  role: {
+    type: String,
+    enum: ["admin", "user"],
+    default: "user",
+  },
 });
 
 userSchema.pre("save", async function (next) {

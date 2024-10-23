@@ -4,27 +4,40 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
+const generateToken = (id, username, email, role) => {
+  return jwt.sign({ id, username, email, role }, process.env.JWT_SECRET, {
     expiresIn: "1d",
   });
 };
 
 export const registerUser = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, CNIC, contact, city } = req.body;
 
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "User already exists" });
     }
-    const user = new User({ username, email, password });
+
+    const user = new User({
+      username,
+      email,
+      password,
+      CNIC,
+      contact,
+      city,
+    });
     await user.save();
+
     res.status(201).json({
       _id: user._id,
       username: user.username,
       email: user.email,
-      token: generateToken(user._id),
+      CNIC: user.CNIC,
+      contact: user.contact,
+      city: user.city,
+      role: user.role,
+      token: generateToken(user._id, user.username, user.email, user.role),
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -60,9 +73,10 @@ export const loginUser = async (req, res) => {
       _id: user._id,
       username: user.username,
       email: user.email,
+      role: user.role,
       message: "User login successful!",
-      token: generateToken(user._id),
-      admin: false,
+      token: generateToken(user._id, user.username, user.email, user.role),
+      admin: user.role === "admin",
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
