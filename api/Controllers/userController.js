@@ -70,12 +70,18 @@ export const loginUser = async (req, res) => {
     }
 
     res.json({
-      _id: user._id,
-      username: user.username,
-      email: user.email,
-      role: user.role,
       message: "User login successful!",
-      token: generateToken(user._id, user.username, user.email, user.role),
+      token: generateToken(),
+      user: {
+        _id: user._id,
+        name: user.username,
+        email: user.email,
+        username: user.username,
+        CNIC: user.CNIC,
+        contact: user.contact,
+        city: user.city,
+        role: user.role,
+      },
       admin: user.role === "admin",
     });
   } catch (error) {
