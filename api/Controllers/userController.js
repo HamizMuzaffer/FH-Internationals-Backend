@@ -14,9 +14,15 @@ export const registerUser = async (req, res) => {
   const { username, email, password, CNIC, contact, city } = req.body;
 
   try {
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ $or: [{ email }, { CNIC }] });
+
     if (existingUser) {
-      return res.status(400).json({ error: error.message });
+      if (existingUser.email === email) {
+        return res.status(400).json({ error: "Email is already in use" });
+      }
+      if (existingUser.CNIC === CNIC) {
+        return res.status(400).json({ error: "CNIC is already in use" });
+      }
     }
 
     const user = new User({
@@ -61,12 +67,12 @@ export const loginUser = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json({ message: "Invalid email or password" });
     }
 
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json({ message: "invalid email or password" });
     }
 
     res.json({
