@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
     required: true,
   },
   CNIC: {
-    type: String,
+    type: String, //update type string
     required: true,
   },
   contact: {
