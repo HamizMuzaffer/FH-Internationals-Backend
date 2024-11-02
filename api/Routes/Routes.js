@@ -19,7 +19,7 @@ const router = express.Router();
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/orders", protect, createOrder);
-router.get("/admin/orders", protect, getAllOrders);
+router.get("/admin/orders",getAllOrders);
 router.put("/admin/update-status", protect, updateOrderStatus);
 router.get("/track/:trackingNumber", trackOrder);
 router.post("/ticket", submitticket);
