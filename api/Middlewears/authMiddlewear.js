@@ -3,6 +3,11 @@ import User from "../Models/usermodels.js";
 
 // Middleware to protect routes and verify JWT token
 export const protect = async (req, res, next) => {
+  // Skip middleware for /favicon.ico requests
+  if (req.path === "/favicon.ico") {
+    return res.status(204).end(); // Respond with 'No Content' and move on
+  }
+
   let token;
 
   if (
