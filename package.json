@@ -8,6 +8,7 @@
     "start": "node api/index.js",
     "dev": "nodemon api/index.js"
   },
+  "keywords": [],
   "author": "Syed Husbn Ali",
   "license": "ISC",
   "dependencies": {
